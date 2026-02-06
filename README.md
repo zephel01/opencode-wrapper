@@ -13,17 +13,29 @@ OpenCode の設定ファイル `opencode.json` を簡単に作成・管理する
 
 ## 設定ファイルの配置場所
 
-`opencode-config-cli.js` を実行したカレントディレクトリに **`opencode.json`** が保存されます。
+コマンドのオプションに応じて設定ファイルの保存場所が変わります。
+
+### カレントディレクトリ（`--local` オプション）
 
 ```bash
 # 実行するディレクトリ
 cd /path/to/your/project
 
-# 設定作成ツールを実行（設定は ./opencode.json に保存）
-node opencode-config-cli.js
+# カレントディレクトリに設定を作成
+opencode-wrapper --local
 
 # 設定ファイルの保存先
 ./opencode.json
+```
+
+### グローバル設定（デフォルト）
+
+```bash
+# グローバル設定を作成
+opencode-wrapper
+
+# 設定ファイルの保存先
+~/.config/opencode/opencode.json
 ```
 
 ## インストール
@@ -36,40 +48,58 @@ npm install
 
 ## 使い方
 
-**方法1: カレントディレクトリで設定を作成（推奨）**
+### インストール
 
-```bash
-node opencode-config-cli.js
-```
-
-**方法2: 実行権限を付与して直接実行**
-
-```bash
-chmod +x opencode-config-cli.js
-./opencode-config-cli.js
-```
-
-**方法3: グローバルインストール（任意）**
+グローバルインストール（推奨）：
 
 ```bash
 npm link
-opencode-wrapper
 ```
 
 または
 
 ```bash
 npm install -g .
-opencode-wrapper
 ```
 
-> **注意**: グローバルインストール版は `~/.config/opencode/opencode.json` に設定を保存します。
+### コマンド
+
+```bash
+# グローバル設定に保存（デフォルト）: ~/.config/opencode/opencode.json
+opencode-wrapper
+
+# カレントディレクトリに保存: ./opencode.json
+opencode-wrapper --local
+# または
+opencode-wrapper -l
+
+# ヘルプを表示
+opencode-wrapper --help
+# または
+opencode-wrapper -h
+```
+
+### オプション
+
+| オプション | 短縮形 | 説明 |
+|----------|--------|------|
+| `--local` | `-l` | カレントディレクトリに設定を保存 |
+| `--global` | `-g` | グローバル設定に保存 |
+| `--help` | `-h` | ヘルプを表示 |
 
 ## 作業フロー
 
 ### 1. 新規作成
 
 新しい設定をゼロから作成する場合：
+
+```bash
+# カレントディレクトリに設定を作成
+opencode-wrapper --local
+
+# グローバル設定を作成
+opencode-wrapper
+```
 
 1. ツールを起動
 2. `新規作成（設定をゼロから作成）` を選択
@@ -82,10 +112,12 @@ opencode-wrapper
 新規作成時、既存の設定ファイルがある場合は自動的にバックアップが作成されます。
 
 ```bash
+# カレントディレクトリに保存の場合
 opencode.json.2026-02-06_12-34-56.bak
-```
 
-（カレントディレクトリに保存されます）
+# グローバル設定に保存の場合
+~/.config/opencode/opencode.json.2026-02-06_12-34-56.bak
+```
 
 ### 2. 編集
 
@@ -275,18 +307,30 @@ opencode -i
 バックアップは以下の形式で保存されます：
 
 ```bash
+# カレントディレクトリに保存の場合
+opencode.json.YYYY-MM-DD_HH-MM-SS.bak
+
+# グローバル設定に保存の場合
 ~/.config/opencode/opencode.json.YYYY-MM-DD_HH-MM-SS.bak
 ```
 
 例：
 
 ```bash
+# カレントディレクトリ
+opencode.json.2026-02-06_12-34-56.bak
+
+# グローバル設定
 ~/.config/opencode/opencode.json.2026-02-06_12-34-56.bak
 ```
 
 バックアップから復元する場合：
 
 ```bash
+# カレントディレクトリ
+cp opencode.json.2026-02-06_12-34-56.bak opencode.json
+
+# グローバル設定
 cp ~/.config/opencode/opencode.json.2026-02-06_12-34-56.bak ~/.config/opencode/opencode.json
 ```
 
@@ -310,17 +354,22 @@ https://note.com/zephel01/n/ndf224d5b6d9a
 サンプル設定ファイルは `examples/opencode.json.example` にあります。
 
 ```bash
-# サンプルをコピーして編集
+# サンプルをコピーして編集（グローバル設定）
 cp examples/opencode.json.example ~/.config/opencode/opencode.json
+
+# サンプルをコピーして編集（カレントディレクトリ）
+cp examples/opencode.json.example ./opencode.json
 
 # エディタで編集
 nano ~/.config/opencode/opencode.json
+# または
+nano ./opencode.json
 ```
 
 または、このツールを使用して対話的に作成することもできます：
 
 ```bash
-opencode-wrapper
+opencode-wrapper --local
 ```
 
 ## セキュリティ注意点
