@@ -1,0 +1,126 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  // デフォルト（-m で上書き可）
+  "model": "lmstudio/glm47",
+
+  "provider": {
+    // ===============================
+    // LM Studio (OpenAI互換)
+    // ===============================
+    "lmstudio": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "LM Studio (local)",
+      "options": {
+        "baseURL": "http://localhost:1234/v1"
+      },
+      "models": {
+        "glm47": {
+          "name": "GLM-4.7-Flash-Uncen-Hrt-NEO-CODE-MAX-imat-D_AU-Q4_K_M",
+          "tools": true
+        },
+        "qwen3": {
+          "name": "Qwen3-Coder-Next-Q3_K_M",
+          "tools": true
+        }
+      }
+    },
+
+    // ===============================
+    // Ollama (OpenAI互換)
+    // ===============================
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (local)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "glm47": {
+          "name": "glm-4.7-flash-neo-code-max:q4_k_m",
+          "tools": true
+        },
+        "qwen3": {
+          "name": "qwen3-coder-next:q3_k_m",
+          "tools": true
+        }
+      }
+    },
+
+    // ===============================
+    // Anthropic (Claude)
+    // ===============================
+    "anthropic": {
+      "npm": "@ai-sdk/anthropic",
+      "name": "Anthropic",
+      "options": {
+        "apiKey": "$ANTHROPIC_API_KEY"
+      },
+      "models": {
+        "claude": {
+          "name": "claude-sonnet-4-20250514",
+          "tools": true
+        }
+      }
+    },
+
+    // ===============================
+    // OpenCode Zen (公式推奨)
+    // ===============================
+    "opencode_zen": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenCode Zen",
+      "options": {
+        "baseURL": "https://api.opencode.ai/v1",
+        "apiKey": "$OPENCODE_ZEN_API_KEY"
+      },
+      "models": {
+        "zen": {
+          "name": "claude-sonnet-4-20250514",
+          "tools": true
+        }
+      }
+    }
+  },
+
+  // ===============================
+  // エージェント（役割分離）
+  // ===============================
+  "agent": {
+    // 設計・要約・レビュー用（GLM - 安全な読み取り専用）
+    "chat": {
+      "description": "設計・要約・レビュー（GLM - 安全な読み取り専用）",
+      "model": "lmstudio/glm47",
+      "tools": {
+        "read": true,
+        "write": false,
+        "edit": false,
+        "bash": false,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "websearch": false,
+        "webfetch": false,
+        "codesearch": false
+      }
+    },
+
+    // 実装・修正用（Qwen Coder - コード生成・実装）
+    "build": {
+      "description": "実装・修正（Qwen Coder - コード生成・実装）",
+      "model": "lmstudio/qwen3",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "websearch": false,
+        "webfetch": false,
+        "codesearch": false
+      }
+    }
+  }
+}

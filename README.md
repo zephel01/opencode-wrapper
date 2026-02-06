@@ -21,14 +21,13 @@ OpenCode の設定ファイル `opencode.json` を簡単に作成・管理する
 ## インストール
 
 ```bash
-cd opencode-wrapper
 npm link
 ```
 
 または、グローバルインストール：
 
 ```bash
-npm install -g ./opencode-wrapper
+npm install -g .
 ```
 
 ## 使い方
@@ -280,11 +279,30 @@ curl http://localhost:11434/v1/models
 詳細な接続確認方法は、以下の記事を参照してください：
 https://note.com/zephel01/n/ndf224d5b6d9a
 
+## 設定例
+
+サンプル設定ファイルは `examples/opencode.json.example` にあります。
+
+```bash
+# サンプルをコピーして編集
+cp examples/opencode.json.example ~/.config/opencode/opencode.json
+
+# エディタで編集
+nano ~/.config/opencode/opencode.json
+```
+
+または、このツールを使用して対話的に作成することもできます：
+
+```bash
+opencode-wrapper
+```
+
 ## セキュリティ注意点
 
 - APIキーを誤って共有しないように注意してください
 - `.bak` ファイルにもAPIキーが含まれるため、適切に管理してください
 - グローバル設定にする場合、`.config/opencode/` ディレクトリの権限を適切に設定してください
+- サンプル設定ファイル（`examples/opencode.json.example`）は個人情報を含まない形式になっています
 
 ## 詳細
 
