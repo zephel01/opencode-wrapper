@@ -1,6 +1,6 @@
 # OpenCode 設定作成ツール
 
-OpenCode の設定ファイル `opencode.json` を簡単に作成・管理するための対話型ツールです。
+OpenCode の設定ファイル `opencode.json` を簡単に作成・管理するための対話型CLIツールです。
 
 ## 特徴
 
@@ -9,38 +9,61 @@ OpenCode の設定ファイル `opencode.json` を簡単に作成・管理する
 - 💾 自動バックアップ（日時付き）
 - 🤖 複数のプロバイダー・エージェントに対応
 - ✨ 既存設定からモデル候補を動的に抽出
+- ↩️ 各設定画面に「戻る」オプションを追加
 
 ## 設定ファイルの配置場所
 
-このツールは、設定ファイルを **`~/.config/opencode/opencode.json`** に固定します。
+`opencode-config-cli.js` を実行したカレントディレクトリに **`opencode.json`** が保存されます。
 
 ```bash
-~/.config/opencode/opencode.json
+# 実行するディレクトリ
+cd /path/to/your/project
+
+# 設定作成ツールを実行（設定は ./opencode.json に保存）
+node opencode-config-cli.js
+
+# 設定ファイルの保存先
+./opencode.json
 ```
 
 ## インストール
 
-```bash
-npm link
-```
-
-または、グローバルインストール：
+依存関係をインストールします：
 
 ```bash
-npm install -g .
+npm install
 ```
 
 ## 使い方
 
+**方法1: カレントディレクトリで設定を作成（推奨）**
+
 ```bash
+node opencode-config-cli.js
+```
+
+**方法2: 実行権限を付与して直接実行**
+
+```bash
+chmod +x opencode-config-cli.js
+./opencode-config-cli.js
+```
+
+**方法3: グローバルインストール（任意）**
+
+```bash
+npm link
 opencode-wrapper
 ```
 
 または
 
 ```bash
-node opencode-wrapper/lib/cli.js
+npm install -g .
+opencode-wrapper
 ```
+
+> **注意**: グローバルインストール版は `~/.config/opencode/opencode.json` に設定を保存します。
 
 ## 作業フロー
 
@@ -59,8 +82,10 @@ node opencode-wrapper/lib/cli.js
 新規作成時、既存の設定ファイルがある場合は自動的にバックアップが作成されます。
 
 ```bash
-~/.config/opencode/opencode.json.2026-02-06_12-34-56.bak
+opencode.json.2026-02-06_12-34-56.bak
 ```
+
+（カレントディレクトリに保存されます）
 
 ### 2. 編集
 
@@ -92,6 +117,7 @@ node opencode-wrapper/lib/cli.js
 - **カテゴリ別プロバイダー選択** - 目的別にプロバイダーを選べる
 - **ドロップダウンでモデル選択** - 手動入力ではなく候補からモデルを選択可能
 - **カスタム入力** - 候補にないモデルも手動入力可能
+- **戻るオプション** - どの設定画面からもメインメニューに戻れる
 
 ## 対応しているプロバイダー
 
